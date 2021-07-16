@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ $2 =~ ^[0-9]+$ ]]; then
-  NUM=$((10#$2))  # drops leading zeros
+if [[ $2 =~ ^[0-9]+$ ]]; then       # checks if 2nd argument is an integer
+  NUM=$((10#$2))                    # drops leading zeros (if any)
   echo "Choosing time-step '$NUM'"
 else
   echo "'$2' is an invalid argument, choose a valid time-step number."
@@ -11,6 +11,7 @@ fi
 REMOTE=euler
 MAIN_REMOTE_DIR=/home/dventuri/st_euler/$1
 
+# copy hdf5 files
 rsync -avzh --stats --progress \
-  $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \
-  $HOME/$1/output
+  $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \   # %09d to create a 9 places integer with leading zeros \
+  $HOME/$1/output                                                           # following the output files naming convention
