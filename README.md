@@ -10,3 +10,8 @@ chmod a+x ./copy_cluster_data.sh
 ~~~shell
 ./copy_cluster_data.sh [case] [time-step number]
 ~~~
+or
+~~~shell
+./copy_cluster_data.sh [case] last
+~~~
+where "_last_" looks for last time-step

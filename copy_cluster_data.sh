@@ -1,15 +1,21 @@
 #!/bin/bash
 
-if [[ $2 =~ ^[0-9]+$ ]]; then       # checks if 2nd argument is an integer
-  NUM=$((10#$2))                    # drops leading zeros (if any)
-  echo "Choosing time-step '$NUM'"
-else
-  echo "'$2' is an invalid argument, choose a valid time-step number."
-  exit 1
-fi
-
 REMOTE=euler
 MAIN_REMOTE_DIR=/home/dventuri/st_euler/$1
+
+# checking for valid 2nd argument (integer or "last")
+if [[ $2 =~ ^[0-9]+$ ]]; then
+  NUM=$((10#$2))                    # drops leading zeros (if any)
+  echo "Choosing time-step '$NUM'"
+elif [[ $2 == "last" ]]; then
+  echo "Checking for last time-step"
+  NUM=$(ssh $REMOTE ls $MAIN_REMOTE_DIR/output | grep ns_output_ct | sort -V | tail -n 1 | awk -F'[.]' '{print $2}')
+  NUM=$((10#$NUM))
+  echo "Last time-step is '$NUM'"
+else
+  echo "'$2' is an invalid argument, choose either 'last' or the time-step number."
+  exit 1
+fi
 
 # copy hdf5 files
 echo ""
