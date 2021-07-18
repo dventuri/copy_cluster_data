@@ -18,3 +18,17 @@ if ! [ -d "$HOME/$1/output" ] ; then mkdir -p $HOME/$1/output ; fi
 rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \
   $HOME/$1/output
+
+#copy dpm files
+echo ""
+echo "Copying PVTP file"
+if ! [ -d "$HOME/$1/output/dpm/pvtp" ] ; then mkdir -p $HOME/$1/output/dpm/pvtp ; fi
+rsync -avh --progress \
+  $REMOTE:$MAIN_REMOTE_DIR/output/dpm/pvtp/dpm_$(printf %07d $NUM).pvtp \
+  $HOME/$1/output/dpm/pvtp
+echo ""
+echo "Copying VTP files"
+if ! [ -d "$HOME/$1/output/dpm/pvtp/vtp" ] ; then mkdir -p $HOME/$1/output/dpm/pvtp/vtp ; fi
+rsync -avh --progress \
+  $REMOTE:$MAIN_REMOTE_DIR/output/dpm/pvtp/vtp/dpm_$(printf %07d $NUM)_*.vtp \
+  $HOME/$1/output/dpm/pvtp/vtp
