@@ -13,5 +13,5 @@ MAIN_REMOTE_DIR=/home/dventuri/st_euler/$1
 
 # copy hdf5 files
 rsync -avzh --stats --progress \
-  $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \   # %09d to create a 9 places integer with leading zeros \
-  $HOME/$1/output                                                           # following the output files naming convention
+  $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \
+  $HOME/$1/output
