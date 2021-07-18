@@ -12,6 +12,8 @@ REMOTE=euler
 MAIN_REMOTE_DIR=/home/dventuri/st_euler/$1
 
 # copy hdf5 files
-rsync -avzh --stats --progress \
+echo ""
+echo "Copying HDF5 file"
+rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \
   $HOME/$1/output
