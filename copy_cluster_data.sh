@@ -17,24 +17,33 @@ else
   exit 1
 fi
 
+# copy out.txt file
+echo ""
+echo "Copying 'out.txt' file"
+if ! [ -d "$HOME/run/$1/bin" ] ; then mkdir -p $HOME/run/$1/bin ; fi
+rsync -avh --progress \
+  $REMOTE:$MAIN_REMOTE_DIR/bin/out.txt \
+  $HOME/run/$1/bin
+
+
 # copy hdf5 files
 echo ""
 echo "Copying HDF5 file"
-if ! [ -d "$HOME/$1/output" ] ; then mkdir -p $HOME/$1/output ; fi
+if ! [ -d "$HOME/run/$1/output" ] ; then mkdir -p $HOME/run/$1/output ; fi
 rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/ns_output_ct.$(printf %09d $NUM).hdf5 \
-  $HOME/$1/output
+  $HOME/run/$1/output
 
 #copy dpm files
 echo ""
 echo "Copying PVTP file"
-if ! [ -d "$HOME/$1/output/dpm/pvtp" ] ; then mkdir -p $HOME/$1/output/dpm/pvtp ; fi
+if ! [ -d "$HOME/run/$1/output/dpm/pvtp" ] ; then mkdir -p $HOME/run/$1/output/dpm/pvtp ; fi
 rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/dpm/pvtp/dpm_$(printf %07d $NUM).pvtp \
-  $HOME/$1/output/dpm/pvtp
+  $HOME/run/$1/output/dpm/pvtp
 echo ""
 echo "Copying VTP files"
-if ! [ -d "$HOME/$1/output/dpm/pvtp/vtp" ] ; then mkdir -p $HOME/$1/output/dpm/pvtp/vtp ; fi
+if ! [ -d "$HOME/run/$1/output/dpm/pvtp/vtp" ] ; then mkdir -p $HOME/run/$1/output/dpm/pvtp/vtp ; fi
 rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/dpm/pvtp/vtp/dpm_$(printf %07d $NUM)_*.vtp \
-  $HOME/$1/output/dpm/pvtp/vtp
+  $HOME/run/$1/output/dpm/pvtp/vtp
