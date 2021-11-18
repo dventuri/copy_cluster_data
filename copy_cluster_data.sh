@@ -25,6 +25,13 @@ rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/bin/out.txt \
   $HOME/run/$1/bin
 
+# copy log files
+echo ""
+echo "Copying log files"
+if ! [ -d "$HOME/run/$1/bin" ] ; then mkdir -p $HOME/run/$1/bin ; fi
+rsync -avh --progress \
+  $REMOTE:$MAIN_REMOTE_DIR/bin/log.* \
+  $HOME/run/$1/bin
 
 # copy hdf5 files
 echo ""
