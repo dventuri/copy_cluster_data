@@ -17,12 +17,12 @@ else
   exit 1
 fi
 
-# copy out.txt file
+# copy out file
 echo ""
-echo "Copying 'out.txt' file"
+echo "Copying 'out' file"
 if ! [ -d "$HOME/run/$1/bin" ] ; then mkdir -p $HOME/run/$1/bin ; fi
 rsync -avh --progress \
-  $REMOTE:$MAIN_REMOTE_DIR/bin/out.txt \
+  $REMOTE:$MAIN_REMOTE_DIR/out \
   $HOME/run/$1/bin
 
 # copy log files
@@ -30,7 +30,7 @@ echo ""
 echo "Copying log files"
 if ! [ -d "$HOME/run/$1/bin" ] ; then mkdir -p $HOME/run/$1/bin ; fi
 rsync -avh --progress \
-  $REMOTE:$MAIN_REMOTE_DIR/bin/log.* \
+  $REMOTE:$MAIN_REMOTE_DIR/log.* \
   $HOME/run/$1/bin
 
 # copy hdf5 files
@@ -43,14 +43,22 @@ rsync -avh --progress \
 
 #copy dpm files
 echo ""
-echo "Copying PVTP file"
+echo "Copying DPM/PVTP file"
 if ! [ -d "$HOME/run/$1/output/dpm/pvtp" ] ; then mkdir -p $HOME/run/$1/output/dpm/pvtp ; fi
 rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/dpm/pvtp/dpm_$(printf %07d $NUM).pvtp \
   $HOME/run/$1/output/dpm/pvtp
 echo ""
-echo "Copying VTP files"
+echo "Copying DPM/VTP files"
 if ! [ -d "$HOME/run/$1/output/dpm/pvtp/vtp" ] ; then mkdir -p $HOME/run/$1/output/dpm/pvtp/vtp ; fi
 rsync -avh --progress \
   $REMOTE:$MAIN_REMOTE_DIR/output/dpm/pvtp/vtp/dpm_$(printf %07d $NUM)_*.vtp \
   $HOME/run/$1/output/dpm/pvtp/vtp
+
+#copy IB files
+echo ""
+echo "Copying IB files"
+if ! [ -d "$HOME/run/$1/output/IB" ] ; then mkdir -p $HOME/run/$1/output/IB ; fi
+rsync -avh --progress \
+  $REMOTE:$MAIN_REMOTE_DIR/output/IB/* \
+  $HOME/run/$1/output/IB/
